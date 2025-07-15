@@ -1,0 +1,42 @@
+table:
+  name: products
+  schema: public
+insert_permissions:
+  - role: store_owner
+    permission:
+      check: {}
+      columns:
+        - name
+        - category_id
+        - id
+        - price
+        - description
+    comment: ""
+select_permissions:
+  - role: store_owner
+    permission:
+      columns:
+        - name
+        - category_id
+        - id
+        - price
+        - description
+      filter: {}
+    comment: ""
+update_permissions:
+  - role: store_owner
+    permission:
+      columns:
+        - name
+        - category_id
+        - id
+        - price
+        - description
+      filter: {}
+      check: null
+    comment: ""
+delete_permissions:
+  - role: store_owner
+    permission:
+      filter: {}
+    comment: ""

@@ -1,0 +1,113 @@
+table:
+  name: addresses
+  schema: public
+insert_permissions:
+  - role: customer
+    permission:
+      check: {}
+      columns:
+        - city
+        - country
+        - state
+        - street
+        - zip_code
+        - customer_id
+        - id
+    comment: ""
+  - role: store_owner
+    permission:
+      check: {}
+      columns:
+        - city
+        - country
+        - state
+        - street
+        - zip_code
+        - customer_id
+        - id
+    comment: ""
+  - role: store_owner2
+    permission:
+      check: {}
+      columns:
+        - city
+        - country
+        - state
+        - street
+        - zip_code
+        - customer_id
+        - id
+    comment: ""
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - city
+        - country
+        - state
+        - street
+        - zip_code
+        - customer_id
+        - id
+      filter: {}
+    comment: ""
+  - role: store_owner
+    permission:
+      columns:
+        - city
+        - country
+        - state
+        - street
+        - zip_code
+        - customer_id
+        - id
+      filter: {}
+    comment: ""
+  - role: store_owner2
+    permission:
+      columns:
+        - city
+        - country
+        - state
+        - street
+        - zip_code
+        - customer_id
+        - id
+      filter: {}
+    comment: ""
+update_permissions:
+  - role: store_owner
+    permission:
+      columns:
+        - city
+        - country
+        - state
+        - street
+        - zip_code
+        - customer_id
+        - id
+      filter: {}
+      check: {}
+    comment: ""
+  - role: store_owner2
+    permission:
+      columns:
+        - city
+        - country
+        - state
+        - street
+        - zip_code
+        - customer_id
+        - id
+      filter: {}
+      check: null
+    comment: ""
+delete_permissions:
+  - role: store_owner
+    permission:
+      filter: {}
+    comment: ""
+  - role: store_owner2
+    permission:
+      filter: {}
+    comment: ""

@@ -1,0 +1,253 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_order_items_id
+  description: Update the 'id' column in the 'order_items' collection
+  fields:
+    - name: _set
+      type: int32!
+      description: Set the column to this value
+  graphql:
+    typeName: update_column_order_items_id
+    inputTypeName: update_column_order_items_id_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_column_order_items_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_order_items_id
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_order_items_order_id
+  description: Update the 'order_id' column in the 'order_items' collection
+  fields:
+    - name: _set
+      type: int32
+      description: Set the column to this value
+  graphql:
+    typeName: update_column_order_items_order_id
+    inputTypeName: update_column_order_items_order_id_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_column_order_items_order_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_order_items_order_id
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_order_items_product_id
+  description: Update the 'product_id' column in the 'order_items' collection
+  fields:
+    - name: _set
+      type: int32
+      description: Set the column to this value
+  graphql:
+    typeName: update_column_order_items_product_id
+    inputTypeName: update_column_order_items_product_id_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_column_order_items_product_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_order_items_product_id
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_order_items_quantity
+  description: Update the 'quantity' column in the 'order_items' collection
+  fields:
+    - name: _set
+      type: int32
+      description: Set the column to this value
+  graphql:
+    typeName: update_column_order_items_quantity
+    inputTypeName: update_column_order_items_quantity_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_column_order_items_quantity
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_order_items_quantity
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_order_items_unit_price
+  description: Update the 'unit_price' column in the 'order_items' collection
+  fields:
+    - name: _set
+      type: bigdecimal
+      description: Set the column to this value
+  graphql:
+    typeName: update_column_order_items_unit_price
+    inputTypeName: update_column_order_items_unit_price_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_column_order_items_unit_price
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_order_items_unit_price
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_order_items_by_id_update_columns
+  description: Update the columns of the 'order_items' collection
+  fields:
+    - name: id
+      type: update_column_order_items_id
+      description: Update the 'id' column in the 'order_items' collection.
+    - name: order_id
+      type: update_column_order_items_order_id
+      description: Update the 'order_id' column in the 'order_items' collection.
+    - name: product_id
+      type: update_column_order_items_product_id
+      description: Update the 'product_id' column in the 'order_items' collection.
+    - name: quantity
+      type: update_column_order_items_quantity
+      description: Update the 'quantity' column in the 'order_items' collection.
+    - name: unit_price
+      type: update_column_order_items_unit_price
+      description: Update the 'unit_price' column in the 'order_items' collection.
+  graphql:
+    typeName: update_order_items_by_id_update_columns
+    inputTypeName: update_order_items_by_id_update_columns_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_order_items_by_id_update_columns
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_order_items_by_id_update_columns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - order_id
+          - product_id
+          - quantity
+          - unit_price
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_order_items_by_id_response
+  description: Responses from the 'update_order_items_by_id' procedure
+  fields:
+    - name: affected_rows
+      type: int32!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[order_items!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: update_order_items_by_id_response
+    inputTypeName: update_order_items_by_id_response_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_order_items_by_id_response
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_order_items_by_id_response
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affected_rows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: update_order_items_by_id
+  outputType: update_order_items_by_id_response!
+  arguments:
+    - name: key_id
+      type: int32!
+    - name: post_check
+      type: order_items_bool_exp
+      description: Update permission post-condition predicate over the 'order_items'
+        collection
+    - name: pre_check
+      type: order_items_bool_exp
+      description: Update permission pre-condition predicate over the 'order_items'
+        collection
+    - name: update_columns
+      type: update_order_items_by_id_update_columns!
+  source:
+    dataConnectorName: mypostgres
+    dataConnectorCommand:
+      procedure: update_order_items_by_id
+  graphql:
+    rootFieldName: update_order_items_by_id
+    rootFieldKind: Mutation
+  description: Update any row on the 'order_items' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: update_order_items_by_id
+  permissions:
+    - role: admin
+      allowExecution: true
+

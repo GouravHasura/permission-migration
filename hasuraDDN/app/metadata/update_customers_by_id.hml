@@ -1,0 +1,141 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_customers_by_id_update_columns
+  description: Update the columns of the 'customers' collection
+  fields:
+  - name: created_at
+    type: update_column_customers_created_at
+    description: Update the 'created_at' column in the 'customers' collection.
+  - name: email
+    type: update_column_customers_email
+    description: Update the 'email' column in the 'customers' collection.
+  - name: first_name
+    type: update_column_customers_first_name
+    description: Update the 'first_name' column in the 'customers' collection.
+  - name: id
+    type: update_column_customers_id
+    description: Update the 'id' column in the 'customers' collection.
+  - name: last_name
+    type: update_column_customers_last_name
+    description: Update the 'last_name' column in the 'customers' collection.
+  graphql:
+    typeName: update_customers_by_id_update_columns
+    inputTypeName: update_customers_by_id_update_columns_input
+  dataConnectorTypeMapping:
+  - dataConnectorName: mypostgres
+    dataConnectorObjectType: update_customers_by_id_update_columns
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_customers_by_id_update_columns
+  permissions:
+  - role: admin
+    output:
+      allowedFields:
+      - created_at
+      - email
+      - first_name
+      - id
+      - last_name
+  - role: store_owner
+    output:
+      allowedFields:
+      - email
+      - first_name
+      - last_name
+      - id
+      - created_at
+  - role: store_owner2
+    output:
+      allowedFields:
+      - email
+      - first_name
+      - last_name
+      - id
+      - created_at
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_customers_by_id_response
+  description: Responses from the 'update_customers_by_id' procedure
+  fields:
+  - name: affected_rows
+    type: int32!
+    description: The number of rows affected by the mutation
+  - name: returning
+    type: '[customers!]!'
+    description: Data from rows affected by the mutation
+  graphql:
+    typeName: update_customers_by_id_response
+    inputTypeName: update_customers_by_id_response_input
+  dataConnectorTypeMapping:
+  - dataConnectorName: mypostgres
+    dataConnectorObjectType: update_customers_by_id_response
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_customers_by_id_response
+  permissions:
+  - role: admin
+    output:
+      allowedFields:
+      - affected_rows
+      - returning
+  - role: store_owner
+    output:
+      allowedFields:
+      - affected_rows
+      - returning
+  - role: store_owner2
+    output:
+      allowedFields:
+      - affected_rows
+      - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: update_customers_by_id
+  outputType: update_customers_by_id_response!
+  arguments:
+  - name: key_id
+    type: int32!
+  - name: post_check
+    type: customers_bool_exp
+    description: Update permission post-condition predicate over the 'customers' collection
+  - name: pre_check
+    type: customers_bool_exp
+    description: Update permission pre-condition predicate over the 'customers' collection
+  - name: update_columns
+    type: update_customers_by_id_update_columns!
+  source:
+    dataConnectorName: mypostgres
+    dataConnectorCommand:
+      procedure: update_customers_by_id
+  graphql:
+    rootFieldName: update_customers_by_id
+    rootFieldKind: Mutation
+  description: Update any row on the 'customers' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: update_customers_by_id
+  permissions:
+  - role: admin
+    allowExecution: true
+  - role: store_owner
+    allowExecution: true
+  - role: store_owner2
+    allowExecution: true
+

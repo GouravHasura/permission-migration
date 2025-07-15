@@ -1,0 +1,94 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: insert_categories_object
+  fields:
+    - name: description
+      type: string
+    - name: id
+      type: int32
+    - name: name
+      type: string
+  graphql:
+    typeName: insert_categories_object
+    inputTypeName: insert_categories_object_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: insert_categories_object
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: insert_categories_object
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - description
+          - id
+          - name
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: insert_categories_response
+  description: Responses from the 'insert_categories' procedure
+  fields:
+    - name: affected_rows
+      type: int32!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[categories!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: insert_categories_response
+    inputTypeName: insert_categories_response_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: insert_categories_response
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: insert_categories_response
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affected_rows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: insert_categories
+  outputType: insert_categories_response!
+  arguments:
+    - name: objects
+      type: "[insert_categories_object!]!"
+    - name: post_check
+      type: categories_bool_exp
+      description: Insert permission predicate over the 'categories' collection
+  source:
+    dataConnectorName: mypostgres
+    dataConnectorCommand:
+      procedure: insert_categories
+  graphql:
+    rootFieldName: insert_categories
+    rootFieldKind: Mutation
+  description: Insert into the categories table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: insert_categories
+  permissions:
+    - role: admin
+      allowExecution: true
+

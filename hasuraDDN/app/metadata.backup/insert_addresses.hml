@@ -1,0 +1,106 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: insert_addresses_object
+  fields:
+    - name: city
+      type: string
+    - name: country
+      type: string
+    - name: customer_id
+      type: int32
+    - name: id
+      type: int32
+    - name: state
+      type: string
+    - name: street
+      type: string
+    - name: zip_code
+      type: string
+  graphql:
+    typeName: insert_addresses_object
+    inputTypeName: insert_addresses_object_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: insert_addresses_object
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: insert_addresses_object
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - city
+          - country
+          - customer_id
+          - id
+          - state
+          - street
+          - zip_code
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: insert_addresses_response
+  description: Responses from the 'insert_addresses' procedure
+  fields:
+    - name: affected_rows
+      type: int32!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[addresses!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: insert_addresses_response
+    inputTypeName: insert_addresses_response_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: insert_addresses_response
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: insert_addresses_response
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affected_rows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: insert_addresses
+  outputType: insert_addresses_response!
+  arguments:
+    - name: objects
+      type: "[insert_addresses_object!]!"
+    - name: post_check
+      type: addresses_bool_exp
+      description: Insert permission predicate over the 'addresses' collection
+  source:
+    dataConnectorName: mypostgres
+    dataConnectorCommand:
+      procedure: insert_addresses
+  graphql:
+    rootFieldName: insert_addresses
+    rootFieldKind: Mutation
+  description: Insert into the addresses table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: insert_addresses
+  permissions:
+    - role: admin
+      allowExecution: true
+

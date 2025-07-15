@@ -1,0 +1,188 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_suppliers_contact_email
+  description: Update the 'contact_email' column in the 'suppliers' collection
+  fields:
+    - name: _set
+      type: string
+      description: Set the column to this value
+  graphql:
+    typeName: update_column_suppliers_contact_email
+    inputTypeName: update_column_suppliers_contact_email_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_column_suppliers_contact_email
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_suppliers_contact_email
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_suppliers_id
+  description: Update the 'id' column in the 'suppliers' collection
+  fields:
+    - name: _set
+      type: int32!
+      description: Set the column to this value
+  graphql:
+    typeName: update_column_suppliers_id
+    inputTypeName: update_column_suppliers_id_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_column_suppliers_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_suppliers_id
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_suppliers_name
+  description: Update the 'name' column in the 'suppliers' collection
+  fields:
+    - name: _set
+      type: string
+      description: Set the column to this value
+  graphql:
+    typeName: update_column_suppliers_name
+    inputTypeName: update_column_suppliers_name_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_column_suppliers_name
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_suppliers_name
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_suppliers_by_id_update_columns
+  description: Update the columns of the 'suppliers' collection
+  fields:
+    - name: contact_email
+      type: update_column_suppliers_contact_email
+      description: Update the 'contact_email' column in the 'suppliers' collection.
+    - name: id
+      type: update_column_suppliers_id
+      description: Update the 'id' column in the 'suppliers' collection.
+    - name: name
+      type: update_column_suppliers_name
+      description: Update the 'name' column in the 'suppliers' collection.
+  graphql:
+    typeName: update_suppliers_by_id_update_columns
+    inputTypeName: update_suppliers_by_id_update_columns_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_suppliers_by_id_update_columns
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_suppliers_by_id_update_columns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - contact_email
+          - id
+          - name
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_suppliers_by_id_response
+  description: Responses from the 'update_suppliers_by_id' procedure
+  fields:
+    - name: affected_rows
+      type: int32!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[suppliers!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: update_suppliers_by_id_response
+    inputTypeName: update_suppliers_by_id_response_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_suppliers_by_id_response
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_suppliers_by_id_response
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affected_rows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: update_suppliers_by_id
+  outputType: update_suppliers_by_id_response!
+  arguments:
+    - name: key_id
+      type: int32!
+    - name: post_check
+      type: suppliers_bool_exp
+      description: Update permission post-condition predicate over the 'suppliers'
+        collection
+    - name: pre_check
+      type: suppliers_bool_exp
+      description: Update permission pre-condition predicate over the 'suppliers' collection
+    - name: update_columns
+      type: update_suppliers_by_id_update_columns!
+  source:
+    dataConnectorName: mypostgres
+    dataConnectorCommand:
+      procedure: update_suppliers_by_id
+  graphql:
+    rootFieldName: update_suppliers_by_id
+    rootFieldKind: Mutation
+  description: Update any row on the 'suppliers' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: update_suppliers_by_id
+  permissions:
+    - role: admin
+      allowExecution: true
+

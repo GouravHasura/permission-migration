@@ -1,0 +1,31 @@
+2025-07-15 15:30:47 ddn supergraph init .
+2025-07-15 15:31:00 ddn connector init -i
+2025-07-15 15:31:07 docker compose -f app/connector/mypostgres/compose.postgres-adminer.yaml up -d
+2025-07-15 15:31:27 docker ps
+2025-07-15 15:32:34 ddn connector introspect mypostgres
+2025-07-15 15:32:40  ddn model add mypostgres "*"
+2025-07-15 15:32:47  ddn command add mypostgres "*"
+2025-07-15 15:32:56 ddn relationship add mypostgres "*"
+2025-07-15 15:37:37 docker ps
+2025-07-15 15:42:23 docker ps
+2025-07-15 15:52:31 ls
+2025-07-15 15:52:50 ddn connector introspect mypostgres
+2025-07-15 15:52:57 ddn model add mypostgres "*"
+2025-07-15 15:53:19 ddn model remove "*"
+2025-07-15 15:53:27 ddn command remove "*"
+2025-07-15 15:53:36 ddn relationship remove "*"
+2025-07-15 15:53:57 ddn connector introspect mypostgres
+2025-07-15 15:54:04 ddn model add mypostgres "*"
+2025-07-15 15:54:29  ddn command add mypostgres "*"
+2025-07-15 15:54:39 ddn relationship add mypostgres "*"
+2025-07-15 16:33:45 ls
+2025-07-15 16:33:54 ddn supergraph build local
+2025-07-15 16:34:01 ddn supergraph build create
+2025-07-15 16:34:08 ddn project init 
+2025-07-15 16:35:31 ddn supergraph build create
+2025-07-15 16:49:00  ddn run docker-start
+2025-07-15 16:51:59 ddn supergraph build create
+2025-07-15 16:52:04 ddn supergraph build local
+2025-07-15 16:53:24  ddn run docker-start
+2025-07-15 16:53:28 ddn supergraph build local
+2025-07-15 17:47:29  ddn run docker-start

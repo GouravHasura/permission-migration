@@ -1,0 +1,193 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: inventory
+  fields:
+    - name: id
+      type: int32!
+    - name: last_updated
+      type: timestamp
+    - name: product_id
+      type: int32
+    - name: quantity
+      type: int32
+    - name: supplier_id
+      type: int32
+  graphql:
+    typeName: inventory
+    inputTypeName: inventory_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: inventory
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: inventory
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - last_updated
+          - product_id
+          - quantity
+          - supplier_id
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: inventory_bool_exp
+  operand:
+    object:
+      type: inventory
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: int4_bool_exp
+        - fieldName: last_updated
+          booleanExpressionType: timestamp_bool_exp
+        - fieldName: product_id
+          booleanExpressionType: int4_bool_exp
+        - fieldName: quantity
+          booleanExpressionType: int4_bool_exp
+        - fieldName: supplier_id
+          booleanExpressionType: int4_bool_exp
+      comparableRelationships:
+        - relationshipName: product
+        - relationshipName: supplier
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: inventory_bool_exp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: inventory_agg_exp
+  operand:
+    object:
+      aggregatedType: inventory
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: int4_agg_exp
+        - fieldName: last_updated
+          aggregateExpression: timestamp_agg_exp
+        - fieldName: product_id
+          aggregateExpression: int4_agg_exp
+        - fieldName: quantity
+          aggregateExpression: int4_agg_exp
+        - fieldName: supplier_id
+          aggregateExpression: int4_agg_exp
+  count:
+    enable: true
+    returnType: int64
+  graphql:
+    selectTypeName: inventory_agg_exp
+
+---
+kind: OrderByExpression
+version: v1
+definition:
+  name: inventory_order_by_exp
+  operand:
+    object:
+      orderedType: inventory
+      orderableFields:
+        - fieldName: id
+          orderByExpression: int32_order_by_exp
+        - fieldName: last_updated
+          orderByExpression: timestamp_order_by_exp
+        - fieldName: product_id
+          orderByExpression: int32_order_by_exp
+        - fieldName: quantity
+          orderByExpression: int32_order_by_exp
+        - fieldName: supplier_id
+          orderByExpression: int32_order_by_exp
+      orderableRelationships:
+        - relationshipName: product
+        - relationshipName: supplier
+  graphql:
+    expressionTypeName: inventory_order_by_exp
+
+---
+kind: Model
+version: v2
+definition:
+  name: inventory
+  objectType: inventory
+  source:
+    dataConnectorName: mypostgres
+    collection: inventory
+  filterExpressionType: inventory_bool_exp
+  aggregateExpression: inventory_agg_exp
+  orderByExpression: inventory_order_by_exp
+  graphql:
+    selectMany:
+      queryRootField: inventory
+      subscription:
+        rootField: inventory
+    selectUniques:
+      - queryRootField: inventory_by_id
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: inventory_by_id
+    filterInputTypeName: inventory_filter_input
+    aggregate:
+      queryRootField: inventory_aggregate
+      subscription:
+        rootField: inventory_aggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: inventory
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: product
+  sourceType: inventory
+  target:
+    model:
+      name: products
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: product_id
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: supplier
+  sourceType: inventory
+  target:
+    model:
+      name: suppliers
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: supplier_id
+      target:
+        modelField:
+          - fieldName: id
+

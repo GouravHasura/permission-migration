@@ -1,0 +1,242 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: products
+  fields:
+    - name: category_id
+      type: int32
+    - name: description
+      type: string
+    - name: id
+      type: int32!
+    - name: name
+      type: string
+    - name: price
+      type: bigdecimal
+  graphql:
+    typeName: products
+    inputTypeName: products_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: products
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: products
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - category_id
+          - description
+          - id
+          - name
+          - price
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: products_bool_exp
+  operand:
+    object:
+      type: products
+      comparableFields:
+        - fieldName: category_id
+          booleanExpressionType: int4_bool_exp
+        - fieldName: description
+          booleanExpressionType: text_bool_exp
+        - fieldName: id
+          booleanExpressionType: int4_bool_exp
+        - fieldName: name
+          booleanExpressionType: varchar_bool_exp
+        - fieldName: price
+          booleanExpressionType: numeric_bool_exp
+      comparableRelationships:
+        - relationshipName: inventories
+        - relationshipName: order_items
+        - relationshipName: category
+        - relationshipName: reviews
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: products_bool_exp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: products_agg_exp
+  operand:
+    object:
+      aggregatedType: products
+      aggregatableFields:
+        - fieldName: category_id
+          aggregateExpression: int4_agg_exp
+        - fieldName: description
+          aggregateExpression: text_agg_exp
+        - fieldName: id
+          aggregateExpression: int4_agg_exp
+        - fieldName: name
+          aggregateExpression: varchar_agg_exp
+        - fieldName: price
+          aggregateExpression: numeric_agg_exp
+  count:
+    enable: true
+    returnType: int64
+  graphql:
+    selectTypeName: products_agg_exp
+
+---
+kind: OrderByExpression
+version: v1
+definition:
+  name: products_order_by_exp
+  operand:
+    object:
+      orderedType: products
+      orderableFields:
+        - fieldName: category_id
+          orderByExpression: int32_order_by_exp
+        - fieldName: description
+          orderByExpression: string_order_by_exp
+        - fieldName: id
+          orderByExpression: int32_order_by_exp
+        - fieldName: name
+          orderByExpression: string_order_by_exp
+        - fieldName: price
+          orderByExpression: bigdecimal_order_by_exp
+      orderableRelationships:
+        - relationshipName: category
+  graphql:
+    expressionTypeName: products_order_by_exp
+
+---
+kind: Model
+version: v2
+definition:
+  name: products
+  objectType: products
+  source:
+    dataConnectorName: mypostgres
+    collection: products
+  filterExpressionType: products_bool_exp
+  aggregateExpression: products_agg_exp
+  orderByExpression: products_order_by_exp
+  graphql:
+    selectMany:
+      queryRootField: products
+      subscription:
+        rootField: products
+    selectUniques:
+      - queryRootField: products_by_id
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: products_by_id
+    filterInputTypeName: products_filter_input
+    aggregate:
+      queryRootField: products_aggregate
+      subscription:
+        rootField: products_aggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: products
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: inventories
+  sourceType: products
+  target:
+    model:
+      name: inventory
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: inventory_agg_exp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: product_id
+  graphql:
+    aggregateFieldName: inventories_aggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: order_items
+  sourceType: products
+  target:
+    model:
+      name: order_items
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: order_items_agg_exp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: product_id
+  graphql:
+    aggregateFieldName: order_items_aggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: category
+  sourceType: products
+  target:
+    model:
+      name: categories
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: category_id
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: reviews
+  sourceType: products
+  target:
+    model:
+      name: reviews
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: reviews_agg_exp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: product_id
+  graphql:
+    aggregateFieldName: reviews_aggregate
+

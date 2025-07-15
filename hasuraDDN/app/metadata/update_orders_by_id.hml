@@ -1,0 +1,356 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_orders_address_id
+  description: Update the 'address_id' column in the 'orders' collection
+  fields:
+  - name: _set
+    type: int32
+    description: Set the column to this value
+  graphql:
+    typeName: update_column_orders_address_id
+    inputTypeName: update_column_orders_address_id_input
+  dataConnectorTypeMapping:
+  - dataConnectorName: mypostgres
+    dataConnectorObjectType: update_column_orders_address_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_orders_address_id
+  permissions:
+  - role: admin
+    output:
+      allowedFields:
+      - _set
+  - role: store_owner
+    output:
+      allowedFields:
+      - _set
+  - role: store_owner2
+    output:
+      allowedFields:
+      - _set
+  - role: warehouse_owner
+    output:
+      allowedFields:
+      - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_orders_customer_id
+  description: Update the 'customer_id' column in the 'orders' collection
+  fields:
+  - name: _set
+    type: int32
+    description: Set the column to this value
+  graphql:
+    typeName: update_column_orders_customer_id
+    inputTypeName: update_column_orders_customer_id_input
+  dataConnectorTypeMapping:
+  - dataConnectorName: mypostgres
+    dataConnectorObjectType: update_column_orders_customer_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_orders_customer_id
+  permissions:
+  - role: admin
+    output:
+      allowedFields:
+      - _set
+  - role: store_owner
+    output:
+      allowedFields:
+      - _set
+  - role: store_owner2
+    output:
+      allowedFields:
+      - _set
+  - role: warehouse_owner
+    output:
+      allowedFields:
+      - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_orders_id
+  description: Update the 'id' column in the 'orders' collection
+  fields:
+  - name: _set
+    type: int32!
+    description: Set the column to this value
+  graphql:
+    typeName: update_column_orders_id
+    inputTypeName: update_column_orders_id_input
+  dataConnectorTypeMapping:
+  - dataConnectorName: mypostgres
+    dataConnectorObjectType: update_column_orders_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_orders_id
+  permissions:
+  - role: admin
+    output:
+      allowedFields:
+      - _set
+  - role: store_owner
+    output:
+      allowedFields:
+      - _set
+  - role: store_owner2
+    output:
+      allowedFields:
+      - _set
+  - role: warehouse_owner
+    output:
+      allowedFields:
+      - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_orders_order_date
+  description: Update the 'order_date' column in the 'orders' collection
+  fields:
+  - name: _set
+    type: timestamp
+    description: Set the column to this value
+  graphql:
+    typeName: update_column_orders_order_date
+    inputTypeName: update_column_orders_order_date_input
+  dataConnectorTypeMapping:
+  - dataConnectorName: mypostgres
+    dataConnectorObjectType: update_column_orders_order_date
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_orders_order_date
+  permissions:
+  - role: admin
+    output:
+      allowedFields:
+      - _set
+  - role: store_owner
+    output:
+      allowedFields:
+      - _set
+  - role: store_owner2
+    output:
+      allowedFields:
+      - _set
+  - role: warehouse_owner
+    output:
+      allowedFields:
+      - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_orders_status
+  description: Update the 'status' column in the 'orders' collection
+  fields:
+  - name: _set
+    type: string
+    description: Set the column to this value
+  graphql:
+    typeName: update_column_orders_status
+    inputTypeName: update_column_orders_status_input
+  dataConnectorTypeMapping:
+  - dataConnectorName: mypostgres
+    dataConnectorObjectType: update_column_orders_status
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_orders_status
+  permissions:
+  - role: admin
+    output:
+      allowedFields:
+      - _set
+  - role: store_owner
+    output:
+      allowedFields:
+      - _set
+  - role: store_owner2
+    output:
+      allowedFields:
+      - _set
+  - role: warehouse_owner
+    output:
+      allowedFields:
+      - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_orders_by_id_update_columns
+  description: Update the columns of the 'orders' collection
+  fields:
+  - name: address_id
+    type: update_column_orders_address_id
+    description: Update the 'address_id' column in the 'orders' collection.
+  - name: customer_id
+    type: update_column_orders_customer_id
+    description: Update the 'customer_id' column in the 'orders' collection.
+  - name: id
+    type: update_column_orders_id
+    description: Update the 'id' column in the 'orders' collection.
+  - name: order_date
+    type: update_column_orders_order_date
+    description: Update the 'order_date' column in the 'orders' collection.
+  - name: status
+    type: update_column_orders_status
+    description: Update the 'status' column in the 'orders' collection.
+  graphql:
+    typeName: update_orders_by_id_update_columns
+    inputTypeName: update_orders_by_id_update_columns_input
+  dataConnectorTypeMapping:
+  - dataConnectorName: mypostgres
+    dataConnectorObjectType: update_orders_by_id_update_columns
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_orders_by_id_update_columns
+  permissions:
+  - role: admin
+    output:
+      allowedFields:
+      - address_id
+      - customer_id
+      - id
+      - order_date
+      - status
+  - role: store_owner
+    output:
+      allowedFields:
+      - status
+      - address_id
+      - customer_id
+      - id
+      - order_date
+  - role: store_owner2
+    output:
+      allowedFields:
+      - status
+      - address_id
+      - customer_id
+      - id
+      - order_date
+  - role: warehouse_owner
+    output:
+      allowedFields:
+      - status
+      - address_id
+      - customer_id
+      - id
+      - order_date
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_orders_by_id_response
+  description: Responses from the 'update_orders_by_id' procedure
+  fields:
+  - name: affected_rows
+    type: int32!
+    description: The number of rows affected by the mutation
+  - name: returning
+    type: '[orders!]!'
+    description: Data from rows affected by the mutation
+  graphql:
+    typeName: update_orders_by_id_response
+    inputTypeName: update_orders_by_id_response_input
+  dataConnectorTypeMapping:
+  - dataConnectorName: mypostgres
+    dataConnectorObjectType: update_orders_by_id_response
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_orders_by_id_response
+  permissions:
+  - role: admin
+    output:
+      allowedFields:
+      - affected_rows
+      - returning
+  - role: store_owner
+    output:
+      allowedFields:
+      - affected_rows
+      - returning
+  - role: store_owner2
+    output:
+      allowedFields:
+      - affected_rows
+      - returning
+  - role: warehouse_owner
+    output:
+      allowedFields:
+      - affected_rows
+      - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: update_orders_by_id
+  outputType: update_orders_by_id_response!
+  arguments:
+  - name: key_id
+    type: int32!
+  - name: post_check
+    type: orders_bool_exp
+    description: Update permission post-condition predicate over the 'orders' collection
+  - name: pre_check
+    type: orders_bool_exp
+    description: Update permission pre-condition predicate over the 'orders' collection
+  - name: update_columns
+    type: update_orders_by_id_update_columns!
+  source:
+    dataConnectorName: mypostgres
+    dataConnectorCommand:
+      procedure: update_orders_by_id
+  graphql:
+    rootFieldName: update_orders_by_id
+    rootFieldKind: Mutation
+  description: Update any row on the 'orders' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: update_orders_by_id
+  permissions:
+  - role: admin
+    allowExecution: true
+  - role: store_owner
+    allowExecution: true
+  - role: store_owner2
+    allowExecution: true
+  - role: warehouse_owner
+    allowExecution: true
+

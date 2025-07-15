@@ -1,0 +1,103 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: insert_reviews_object
+  fields:
+    - name: comment
+      type: string
+    - name: created_at
+      type: timestamp
+    - name: customer_id
+      type: int32
+    - name: id
+      type: int32
+    - name: product_id
+      type: int32
+    - name: rating
+      type: int32
+  graphql:
+    typeName: insert_reviews_object
+    inputTypeName: insert_reviews_object_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: insert_reviews_object
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: insert_reviews_object
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - comment
+          - created_at
+          - customer_id
+          - id
+          - product_id
+          - rating
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: insert_reviews_response
+  description: Responses from the 'insert_reviews' procedure
+  fields:
+    - name: affected_rows
+      type: int32!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[reviews!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: insert_reviews_response
+    inputTypeName: insert_reviews_response_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: insert_reviews_response
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: insert_reviews_response
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affected_rows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: insert_reviews
+  outputType: insert_reviews_response!
+  arguments:
+    - name: objects
+      type: "[insert_reviews_object!]!"
+    - name: post_check
+      type: reviews_bool_exp
+      description: Insert permission predicate over the 'reviews' collection
+  source:
+    dataConnectorName: mypostgres
+    dataConnectorCommand:
+      procedure: insert_reviews
+  graphql:
+    rootFieldName: insert_reviews
+    rootFieldKind: Mutation
+  description: Insert into the reviews table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: insert_reviews
+  permissions:
+    - role: admin
+      allowExecution: true
+

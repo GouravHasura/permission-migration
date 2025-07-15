@@ -1,0 +1,263 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: customers
+  fields:
+  - name: created_at
+    type: timestamp
+  - name: email
+    type: string
+  - name: first_name
+    type: string
+  - name: id
+    type: int32!
+  - name: last_name
+    type: string
+  graphql:
+    typeName: customers
+    inputTypeName: customers_input
+  dataConnectorTypeMapping:
+  - dataConnectorName: mypostgres
+    dataConnectorObjectType: customers
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: customers
+  permissions:
+  - role: admin
+    output:
+      allowedFields:
+      - created_at
+      - email
+      - first_name
+      - id
+      - last_name
+  - role: customer
+    output:
+      allowedFields:
+      - email
+      - first_name
+      - last_name
+      - id
+      - created_at
+  - role: store_owner
+    output:
+      allowedFields:
+      - email
+      - first_name
+      - last_name
+      - id
+      - created_at
+  - role: store_owner2
+    output:
+      allowedFields:
+      - email
+      - first_name
+      - last_name
+      - id
+      - created_at
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: customers_bool_exp
+  operand:
+    object:
+      type: customers
+      comparableFields:
+      - fieldName: created_at
+        booleanExpressionType: timestamp_bool_exp
+      - fieldName: email
+        booleanExpressionType: varchar_bool_exp
+      - fieldName: first_name
+        booleanExpressionType: varchar_bool_exp
+      - fieldName: id
+        booleanExpressionType: int4_bool_exp
+      - fieldName: last_name
+        booleanExpressionType: varchar_bool_exp
+      comparableRelationships:
+      - relationshipName: addresses
+      - relationshipName: orders
+      - relationshipName: reviews
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: customers_bool_exp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: customers_agg_exp
+  operand:
+    object:
+      aggregatedType: customers
+      aggregatableFields:
+      - fieldName: created_at
+        aggregateExpression: timestamp_agg_exp
+      - fieldName: email
+        aggregateExpression: varchar_agg_exp
+      - fieldName: first_name
+        aggregateExpression: varchar_agg_exp
+      - fieldName: id
+        aggregateExpression: int4_agg_exp
+      - fieldName: last_name
+        aggregateExpression: varchar_agg_exp
+  count:
+    enable: true
+    returnType: int64
+  graphql:
+    selectTypeName: customers_agg_exp
+
+---
+kind: OrderByExpression
+version: v1
+definition:
+  name: customers_order_by_exp
+  operand:
+    object:
+      orderedType: customers
+      orderableFields:
+      - fieldName: created_at
+        orderByExpression: timestamp_order_by_exp
+      - fieldName: email
+        orderByExpression: string_order_by_exp
+      - fieldName: first_name
+        orderByExpression: string_order_by_exp
+      - fieldName: id
+        orderByExpression: int32_order_by_exp
+      - fieldName: last_name
+        orderByExpression: string_order_by_exp
+      orderableRelationships: []
+  graphql:
+    expressionTypeName: customers_order_by_exp
+
+---
+kind: Model
+version: v2
+definition:
+  name: customers
+  objectType: customers
+  source:
+    dataConnectorName: mypostgres
+    collection: customers
+  filterExpressionType: customers_bool_exp
+  aggregateExpression: customers_agg_exp
+  orderByExpression: customers_order_by_exp
+  graphql:
+    selectMany:
+      queryRootField: customers
+      subscription:
+        rootField: customers
+    selectUniques:
+    - queryRootField: customers_by_email
+      uniqueIdentifier:
+      - email
+      subscription:
+        rootField: customers_by_email
+    - queryRootField: customers_by_id
+      uniqueIdentifier:
+      - id
+      subscription:
+        rootField: customers_by_id
+    filterInputTypeName: customers_filter_input
+    aggregate:
+      queryRootField: customers_aggregate
+      subscription:
+        rootField: customers_aggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: customers
+  permissions:
+  - role: admin
+    select:
+      filter: null
+      allowSubscriptions: true
+  - role: customer
+    select:
+      filter: null
+      allowSubscriptions: true
+  - role: store_owner
+    select:
+      filter: null
+      allowSubscriptions: true
+  - role: store_owner2
+    select:
+      filter: null
+      allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: addresses
+  sourceType: customers
+  target:
+    model:
+      name: addresses
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: addresses_agg_exp
+  mapping:
+  - source:
+      fieldPath:
+      - fieldName: id
+    target:
+      modelField:
+      - fieldName: customer_id
+  graphql:
+    aggregateFieldName: addresses_aggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orders
+  sourceType: customers
+  target:
+    model:
+      name: orders
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: orders_agg_exp
+  mapping:
+  - source:
+      fieldPath:
+      - fieldName: id
+    target:
+      modelField:
+      - fieldName: customer_id
+  graphql:
+    aggregateFieldName: orders_aggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: reviews
+  sourceType: customers
+  target:
+    model:
+      name: reviews
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: reviews_agg_exp
+  mapping:
+  - source:
+      fieldPath:
+      - fieldName: id
+    target:
+      modelField:
+      - fieldName: customer_id
+  graphql:
+    aggregateFieldName: reviews_aggregate
+

@@ -1,0 +1,24 @@
+2025-07-14 16:32:51 cd hasura-metadata
+2025-07-14 16:32:52 ls
+2025-07-14 16:33:30 cd ..
+2025-07-14 16:33:30 ls
+2025-07-14 16:33:37 hasura metadata export
+2025-07-14 16:39:32 hasura metadata export
+2025-07-14 16:39:38 ls
+2025-07-14 16:51:19 cd hasura-metadata
+2025-07-14 16:51:19 ls
+2025-07-14 16:51:25 hasura metadata diff
+2025-07-14 16:51:40 hasura metadata apply -h
+2025-07-14 16:53:33 hasura metadata apply  --dry-run
+2025-07-14 16:54:06 hasura metadata apply
+2025-07-14 16:54:15 hasura metadata ic list
+2025-07-14 17:10:39 ls
+2025-07-14 17:10:44 hasura metadata apply
+2025-07-14 17:11:27 hasura metadata apply
+2025-07-14 17:27:39 ls
+2025-07-14 17:27:44 hasura metadata export
+2025-07-14 17:35:53 hasura console
+2025-07-14 17:38:31 hasura metadata apply
+2025-07-14 17:47:14 ls
+2025-07-15 15:48:27 cd hasura-metadata
+2025-07-15 15:48:34 hasura metadata export

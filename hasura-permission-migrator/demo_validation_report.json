@@ -1,0 +1,12 @@
+{
+  "timestamp": "/Users/gouravhasura/Code/Optum-related/permissionMigrationsV2toDDN/hasura-permission-migrator",
+  "migration_validation": {},
+  "consistency_validation": {},
+  "summary": {
+    "total_tables": 10,
+    "successful_migrations": 10,
+    "failed_migrations": 0,
+    "consistency_issues": 0,
+    "overall_success": true
+  }
+}

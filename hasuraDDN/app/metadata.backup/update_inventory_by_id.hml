@@ -1,0 +1,252 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_inventory_id
+  description: Update the 'id' column in the 'inventory' collection
+  fields:
+    - name: _set
+      type: int32!
+      description: Set the column to this value
+  graphql:
+    typeName: update_column_inventory_id
+    inputTypeName: update_column_inventory_id_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_column_inventory_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_inventory_id
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_inventory_last_updated
+  description: Update the 'last_updated' column in the 'inventory' collection
+  fields:
+    - name: _set
+      type: timestamp
+      description: Set the column to this value
+  graphql:
+    typeName: update_column_inventory_last_updated
+    inputTypeName: update_column_inventory_last_updated_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_column_inventory_last_updated
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_inventory_last_updated
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_inventory_product_id
+  description: Update the 'product_id' column in the 'inventory' collection
+  fields:
+    - name: _set
+      type: int32
+      description: Set the column to this value
+  graphql:
+    typeName: update_column_inventory_product_id
+    inputTypeName: update_column_inventory_product_id_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_column_inventory_product_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_inventory_product_id
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_inventory_quantity
+  description: Update the 'quantity' column in the 'inventory' collection
+  fields:
+    - name: _set
+      type: int32
+      description: Set the column to this value
+  graphql:
+    typeName: update_column_inventory_quantity
+    inputTypeName: update_column_inventory_quantity_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_column_inventory_quantity
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_inventory_quantity
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_column_inventory_supplier_id
+  description: Update the 'supplier_id' column in the 'inventory' collection
+  fields:
+    - name: _set
+      type: int32
+      description: Set the column to this value
+  graphql:
+    typeName: update_column_inventory_supplier_id
+    inputTypeName: update_column_inventory_supplier_id_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_column_inventory_supplier_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_column_inventory_supplier_id
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - _set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_inventory_by_id_update_columns
+  description: Update the columns of the 'inventory' collection
+  fields:
+    - name: id
+      type: update_column_inventory_id
+      description: Update the 'id' column in the 'inventory' collection.
+    - name: last_updated
+      type: update_column_inventory_last_updated
+      description: Update the 'last_updated' column in the 'inventory' collection.
+    - name: product_id
+      type: update_column_inventory_product_id
+      description: Update the 'product_id' column in the 'inventory' collection.
+    - name: quantity
+      type: update_column_inventory_quantity
+      description: Update the 'quantity' column in the 'inventory' collection.
+    - name: supplier_id
+      type: update_column_inventory_supplier_id
+      description: Update the 'supplier_id' column in the 'inventory' collection.
+  graphql:
+    typeName: update_inventory_by_id_update_columns
+    inputTypeName: update_inventory_by_id_update_columns_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_inventory_by_id_update_columns
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_inventory_by_id_update_columns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - last_updated
+          - product_id
+          - quantity
+          - supplier_id
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_inventory_by_id_response
+  description: Responses from the 'update_inventory_by_id' procedure
+  fields:
+    - name: affected_rows
+      type: int32!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[inventory!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: update_inventory_by_id_response
+    inputTypeName: update_inventory_by_id_response_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: update_inventory_by_id_response
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_inventory_by_id_response
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affected_rows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: update_inventory_by_id
+  outputType: update_inventory_by_id_response!
+  arguments:
+    - name: key_id
+      type: int32!
+    - name: post_check
+      type: inventory_bool_exp
+      description: Update permission post-condition predicate over the 'inventory'
+        collection
+    - name: pre_check
+      type: inventory_bool_exp
+      description: Update permission pre-condition predicate over the 'inventory' collection
+    - name: update_columns
+      type: update_inventory_by_id_update_columns!
+  source:
+    dataConnectorName: mypostgres
+    dataConnectorCommand:
+      procedure: update_inventory_by_id
+  graphql:
+    rootFieldName: update_inventory_by_id
+    rootFieldKind: Mutation
+  description: Update any row on the 'inventory' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: update_inventory_by_id
+  permissions:
+    - role: admin
+      allowExecution: true
+

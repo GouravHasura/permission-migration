@@ -1,0 +1,227 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: addresses
+  fields:
+    - name: city
+      type: string
+    - name: country
+      type: string
+    - name: customer_id
+      type: int32
+    - name: id
+      type: int32!
+    - name: state
+      type: string
+    - name: street
+      type: string
+    - name: zip_code
+      type: string
+  graphql:
+    typeName: addresses
+    inputTypeName: addresses_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: addresses
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: addresses
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - city
+          - country
+          - customer_id
+          - id
+          - state
+          - street
+          - zip_code
+    - role: store_owner
+      output:
+        allowedFields:
+          - city
+          - country
+          - customer_id
+          - id
+          - state
+          - street
+          - zip_code
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: addresses_bool_exp
+  operand:
+    object:
+      type: addresses
+      comparableFields:
+        - fieldName: city
+          booleanExpressionType: varchar_bool_exp
+        - fieldName: country
+          booleanExpressionType: varchar_bool_exp
+        - fieldName: customer_id
+          booleanExpressionType: int4_bool_exp
+        - fieldName: id
+          booleanExpressionType: int4_bool_exp
+        - fieldName: state
+          booleanExpressionType: varchar_bool_exp
+        - fieldName: street
+          booleanExpressionType: varchar_bool_exp
+        - fieldName: zip_code
+          booleanExpressionType: varchar_bool_exp
+      comparableRelationships:
+        - relationshipName: customer
+        - relationshipName: orders
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: addresses_bool_exp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: addresses_agg_exp
+  operand:
+    object:
+      aggregatedType: addresses
+      aggregatableFields:
+        - fieldName: city
+          aggregateExpression: varchar_agg_exp
+        - fieldName: country
+          aggregateExpression: varchar_agg_exp
+        - fieldName: customer_id
+          aggregateExpression: int4_agg_exp
+        - fieldName: id
+          aggregateExpression: int4_agg_exp
+        - fieldName: state
+          aggregateExpression: varchar_agg_exp
+        - fieldName: street
+          aggregateExpression: varchar_agg_exp
+        - fieldName: zip_code
+          aggregateExpression: varchar_agg_exp
+  count:
+    enable: true
+    returnType: int64
+  graphql:
+    selectTypeName: addresses_agg_exp
+
+---
+kind: OrderByExpression
+version: v1
+definition:
+  name: addresses_order_by_exp
+  operand:
+    object:
+      orderedType: addresses
+      orderableFields:
+        - fieldName: city
+          orderByExpression: string_order_by_exp
+        - fieldName: country
+          orderByExpression: string_order_by_exp
+        - fieldName: customer_id
+          orderByExpression: int32_order_by_exp
+        - fieldName: id
+          orderByExpression: int32_order_by_exp
+        - fieldName: state
+          orderByExpression: string_order_by_exp
+        - fieldName: street
+          orderByExpression: string_order_by_exp
+        - fieldName: zip_code
+          orderByExpression: string_order_by_exp
+      orderableRelationships:
+        - relationshipName: customer
+  graphql:
+    expressionTypeName: addresses_order_by_exp
+
+---
+kind: Model
+version: v2
+definition:
+  name: addresses
+  objectType: addresses
+  source:
+    dataConnectorName: mypostgres
+    collection: addresses
+  filterExpressionType: addresses_bool_exp
+  aggregateExpression: addresses_agg_exp
+  orderByExpression: addresses_order_by_exp
+  graphql:
+    selectMany:
+      queryRootField: addresses
+      subscription:
+        rootField: addresses
+    selectUniques:
+      - queryRootField: addresses_by_id
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: addresses_by_id
+    filterInputTypeName: addresses_filter_input
+    aggregate:
+      queryRootField: addresses_aggregate
+      subscription:
+        rootField: addresses_aggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: addresses
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+    - role: store_owner
+      select:
+        filter: null
+        allowSubscriptions: true
+---
+kind: Relationship
+version: v1
+definition:
+  name: customer
+  sourceType: addresses
+  target:
+    model:
+      name: customers
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: customer_id
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orders
+  sourceType: addresses
+  target:
+    model:
+      name: orders
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: orders_agg_exp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: address_id
+  graphql:
+    aggregateFieldName: orders_aggregate
+

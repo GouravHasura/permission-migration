@@ -1,0 +1,100 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: insert_orders_object
+  fields:
+    - name: address_id
+      type: int32
+    - name: customer_id
+      type: int32
+    - name: id
+      type: int32
+    - name: order_date
+      type: timestamp
+    - name: status
+      type: string
+  graphql:
+    typeName: insert_orders_object
+    inputTypeName: insert_orders_object_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: insert_orders_object
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: insert_orders_object
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - address_id
+          - customer_id
+          - id
+          - order_date
+          - status
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: insert_orders_response
+  description: Responses from the 'insert_orders' procedure
+  fields:
+    - name: affected_rows
+      type: int32!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[orders!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: insert_orders_response
+    inputTypeName: insert_orders_response_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: insert_orders_response
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: insert_orders_response
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affected_rows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: insert_orders
+  outputType: insert_orders_response!
+  arguments:
+    - name: objects
+      type: "[insert_orders_object!]!"
+    - name: post_check
+      type: orders_bool_exp
+      description: Insert permission predicate over the 'orders' collection
+  source:
+    dataConnectorName: mypostgres
+    dataConnectorCommand:
+      procedure: insert_orders
+  graphql:
+    rootFieldName: insert_orders
+    rootFieldKind: Mutation
+  description: Insert into the orders table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: insert_orders
+  permissions:
+    - role: admin
+      allowExecution: true
+
