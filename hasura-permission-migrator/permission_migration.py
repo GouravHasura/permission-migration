@@ -172,16 +172,19 @@ class FilterConverter:
         return None
 
     def _convert_relationship_filter(self, field_name: str, field_expr: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Convert relationship-based filters."""
-        # For now, we'll convert simple relationship filters
-        # More complex relationship handling can be added later
+        """Convert relationship-based filters to DDN relationship format."""
         logger.debug(f"Relationship filter detected for {field_name}: {field_expr}")
 
-        # Try to convert the nested expression
-        converted_nested = self._convert_expression(field_expr)
-        if converted_nested:
-            # This is a simplified conversion - DDN relationship filters may need different structure
-            return {field_name: converted_nested}
+        # Convert the nested expression to a predicate
+        converted_predicate = self._convert_expression(field_expr)
+        if converted_predicate:
+            # DDN uses relationship structure with name and predicate
+            return {
+                'relationship': {
+                    'name': field_name,
+                    'predicate': converted_predicate
+                }
+            }
 
         return None
 
